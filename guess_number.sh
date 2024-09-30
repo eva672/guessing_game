@@ -1,18 +1,23 @@
-guessing_game() {
+#!/bin/bash
+# A simple number guessing game script
+guessing_number() {
     rand_number=$((RANDOM % $1))
-    for i in {1..3}; do
-        echo "guess the number" #promt the user to enter a value
-        read guess_number       #read input from the user
-        if [ $rand_number -eq $guess_number ]; then
-            echo "Congratulations , You Won!"
-            return
-        elif [$rand_number -gt $guesss_number ]; then
-            echo "You miss! The random number is lesser than $guess_number"
-        else
-            echo "you missed! The random number is lesser than $guess_number "
-        fi
+    read -p "Guess a number between 0 and $1: " guest_number
 
-        echo "Please try again!"
+    for i in {1..3}; do
+        if [ $rand_number -eq $guest_number ]; then
+            echo "You won!"
+            break
+        elif [ $rand_number -gt $guest_number ]; then
+            echo "You missed! The random number is greater than $guest_number."
+            read -p "Please try again: " guest_number
+        else
+            echo "You missed! The random number is less than $guest_number."
+            read -p "Please try again: " guest_number
+        fi
     done
-    echo "You lose, the number was $rand_number"
+
+    if [ $i -eq 3 ]; then
+        echo "You lose! The correct number was $rand_number."
+    fi
 }
